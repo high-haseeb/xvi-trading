@@ -1,13 +1,31 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
+const Loading = () => {
+  return (
+    <div className="bg-black text-white tracking-widest w-screen h-screen flex flex-col justify-between absolute top-0 left-0 z-10">
+      <Image
+        src="/logo.jpg"
+        width={200}
+        height={200}
+        alt="logo image"
+        className={`absolute top-0 left-1/2 translate-x-[-50%] z-10`}
+      />
+      <div className="flex items-center justify-center text-7xl h-full z-10">
+        Loading...
+      </div>
+      <div className="absolute w-[30rem] h-[30rem] z-0 top-10 right-20 bg-gradient-radial from-stone-700 via-black to-black blur-3xl" />
+      <div className="absolute w-[30rem] h-[30rem] z-0 bottom-20 left-20 bg-gradient-radial from-stone-700 via-stone-900 to-black blur-3xl" />
+    </div>
+  );
+};
 const Landing = () => {
   const [open, setOpen] = useState(false);
   return (
-    <>
-      <Logo open={open}/>
+    <Suspense fallback={<Loading />}>
+      <Logo open={open} />
       <div className="bg-black text-white tracking-widest w-screen h-screen flex flex-col justify-between absolute top-0 left-0 z-10">
         <div className="px-20 z-10">
           <Image
@@ -15,9 +33,10 @@ const Landing = () => {
             width={200}
             height={200}
             alt="logo image"
-            className={ `absolute top-0 left-1/2 translate-x-[-50%] ${open ? "hidden" : "block"}` }
+            className={`absolute top-0 left-1/2 translate-x-[-50%] ${open ? "hidden" : "block"
+              }`}
           />
-          <Navbar callback={()=> setOpen(true)}/>
+          <Navbar callback={() => setOpen(true)} />
           <div className="flex items-center justify-center text-center tracking-widest">
             <div className="text-7xl capitalize font-bold m-20">
               Our gateway to <br />
@@ -46,15 +65,18 @@ const Landing = () => {
         <div className="absolute w-[30rem] h-[30rem] z-0 top-10 right-20 bg-gradient-radial from-stone-700 via-black to-black blur-3xl" />
         <div className="absolute w-[30rem] h-[30rem] z-0 bottom-20 left-20 bg-gradient-radial from-stone-700 via-stone-900 to-black blur-3xl" />
       </div>
-    </>
+    </Suspense>
   );
 };
 
 export default Landing;
-const Navbar = ({callback}) => {
+const Navbar = ({ callback }) => {
   return (
     <div className="flex items-end justify-end mt-10">
-      <button className="px-8 py-2 font-bold border-[1px] rounded text-sm flex items-center justify-center w-auto text-white hover:text-black hover:bg-gradient-to-b from-[#EDC02B] to-[#F8EA76]  transition-transform duration-300 hover:scale-110 " onClick={() => callback(true)}>
+      <button
+        className="px-8 py-2 font-bold border-[1px] rounded text-sm flex items-center justify-center w-auto text-white hover:text-black hover:bg-gradient-to-b from-[#EDC02B] to-[#F8EA76]  transition-transform duration-300 hover:scale-110 "
+        onClick={() => callback(true)}
+      >
         Login
       </button>
     </div>
