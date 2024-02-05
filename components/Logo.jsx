@@ -37,8 +37,8 @@ export function Model({open, ...props }) {
         .to(logoRef.current.position,{duration: 2, y: 2, onComplete: () => router.push('/about')},2);
     }
   }, [open]);
-  const gold = new THREE.MeshPhysicalMaterial({color: 'gold', metalness: 0.8, roughness: 0.2})
-  const silver = new THREE.MeshPhysicalMaterial({color: 'silver', metalness: 0.9, roughness: 0.2})
+  const gold = new THREE.MeshPhysicalMaterial({color: '#FDD017', metalness: 0.8, roughness: 0.2})
+  const silver = new THREE.MeshPhysicalMaterial({color: 'lightgray', metalness: 0.9, roughness: 0.2})
   return (
     <group {...props} dispose={null} ref={group}>
       <mesh geometry={nodes.top.geometry} ref={top} material={gold} position={[-0.25, -0.034, 0.115]} />
