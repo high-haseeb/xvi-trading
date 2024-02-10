@@ -10,10 +10,8 @@ import { useRouter } from 'next/navigation';
 export const Logo = ({ open }) => {
   return (
     <Canvas className={`absolute top-0 left-0 w-screen ${open ? "z-50" : "z-0"} h-screen  pointer-events-none`}>
-      <ambientLight intensity={3} />
-      <directionalLight intensity={2} position={[0, 10, 0]} />
-      <directionalLight intensity={2} position={[0,-10, 0]} />
-      <Model position={[0, 2, 0]} rotation={[Math.PI / 2, 0, 0]} scale={10} open={open} />
+      <ambientLight intensity={2.8} />
+      <Model position={[0, 2.5, 0]} rotation={[Math.PI / 2, 0, 0]} scale={10} open={open} />
     </Canvas>
   );
 };
@@ -38,16 +36,13 @@ export function Model({ open, ...props }) {
         .to(logoRef.current.position, { duration: 2, y: 2, onComplete: () => router.push('/about') }, 2);
     }
   }, [open]);
-  const gold = new THREE.MeshPhysicalMaterial({ color: '#F3C749', metalness: 0.8, roughness: 0.2 })
-  const silver = new THREE.MeshPhysicalMaterial({ color: '#9A9A9A', metalness: 0.9, roughness: 0.2 })
   return (
-    <group {...props} dispose={null} ref={group}>
-      <mesh geometry={nodes.top.geometry} ref={top} material={gold} position={[-0.25, -0.034, 0.115]} />
-      <mesh geometry={nodes.bottom.geometry} ref={bottom} material={silver} position={[-0.25, -0.034, 0.115]} />
-      <pointLight intensity={6} />
+    <group {...props} dispose={null} ref={group} position={[0,2, 0]}>
+      <mesh ref={bottom} geometry={nodes.bottom.geometry} material={materials['Material.001']} />
+      <mesh ref={top} geometry={nodes.top.geometry} material={materials['Material.001']} />
       <group ref={logoRef}>
-        <mesh geometry={nodes.xvi.geometry} material={silver} position={[-0.25, -0.034, 0.115]} />
-        <mesh geometry={nodes.trading.geometry} material={gold} position={[-0.25, -0.034, 0.115]} />
+        <mesh geometry={nodes.xvi.geometry} material={materials['Material.001']} />
+        <mesh geometry={nodes.trading.geometry} material={materials['Material.001']} />
       </group>
     </group>
   )
